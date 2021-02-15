@@ -1,5 +1,7 @@
+<h5>Add Users</h5>
+<%#= link_to "Add Users", school_new_principle_path(@school) %>
+<%#= link_to("text", "url" , :options) %>
 <p id="notice"><%= notice %></p>
-
 <p>
   <strong>Title:</strong>
   <%= @event.title %>
@@ -22,3 +24,63 @@
 
 <%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %>
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>description</th>
+      <th>amount</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @event_expenses.each do |expense| %>
+      <tr>
+        <td><%= expense.date  %></td>
+        <td><%= expense.description %></td>
+        <td><%= expense.amount %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br><br><br><br><br><br><br>
+<%# byebug %>
+<%#= form_for @event do |f| %>
+  <!-- <h3>ADD Expenses</h3>
+  <div id='expenses'> -->
+    <%#= f.fields_for :expenses do |expense| %>
+      <%#= render 'expense_fields', f: expense  %>
+    <%# end %>
+    <!-- <div class='links'> -->
+      <%# link_to_add_association 'add expenses', f, :expenses %>
+    <!-- </div> -->
+  <!-- </div> -->
+
+  <!-- <div class="actions">
+    <%#= f.submit %>
+  </div> -->
+<%# end %>
+
+
+
+<%#= form_for  Expense.new do |form| %>
+  <!-- <div class="field">
+    <%#= form.label :description %>
+    <%#= form.text_field :description %>
+  </div>
+
+  <div class="field">
+    <%#= form.label :date %>
+    <%#= form.date_select :date %>
+  </div>
+
+  <div class="field">
+    <%#= form.label :amount %>
+    <%#= form.number_field :amount %>
+  </div>
+
+  <div class="actions">
+  <%#= form.submit %>
+  </div> -->
+<%# end %>

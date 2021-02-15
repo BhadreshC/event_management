@@ -7,6 +7,7 @@ class EventsController < ApplicationController
 
   # GET /events/1 or /events/1.json
   def show
+    @event_expenses = current_user.expenses.all
   end
 
   # GET /events/new
@@ -15,12 +16,12 @@ class EventsController < ApplicationController
   end
 
   # GET /events/1/edit
-  def edit
-  end
+  def edit;end
 
   # POST /events or /events.json
   def create
     @event = current_user.events.new(event_params)
+    current_user.events << @event
     respond_to do |format|
       if @event.save
         format.html { redirect_to @event, notice: "Event was successfully created." }
