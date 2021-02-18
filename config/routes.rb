@@ -3,10 +3,11 @@ Rails.application.routes.draw do
     sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in' 
   }
   root to: redirect("/login")
-  resources :expenses do
-    get 'add_user', to:'new_user_registration_path'
+  resources :events do
+    resources :budget_lists, except: [:index, :show]
+    resources :expenses, except: [:index, :show]
+    get 'add_member', to:'users#add_member'
+    post 'users', to:'users#create_member'
   end
-  resources :events
   match '*path', to: 'errors#error_404', via: :all
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

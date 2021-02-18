@@ -1,6 +1,8 @@
-//= require jquery.min
+//= require jquery
+//= require jquery_ujs
 //= require popper.min
 //= require bootstrap.min
+//= require datatable.min
 //= require app-style-switcher
 //= require feather.min
 //= require perfect_scrollbar_jquery.min

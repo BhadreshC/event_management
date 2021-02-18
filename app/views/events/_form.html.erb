@@ -1,37 +1,62 @@
-<%= form_with(model: event) do |form| %>
-  <% if event.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
-
-      <ul>
-        <% event.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<div class="page-wrapper">
+  <div class="page-breadcrumb"> 
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Add Event</h4>
+            <%= form_with(model: event) do |form| %>
+              <% if event.errors.any? %>
+                <h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
+                <ul>
+                  <% event.errors.each do |error| %>
+                    <li><%= error.full_message %></li>
+                  <% end %>
+                </ul>
+              <% end %>
+              <div class="form-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <%= form.label :title %>
+                      <%= form.text_field :title, class: "form-control", placeholder: "Enter Title",required: true%>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <%= form.label :venue %>
+                      <%= form.text_field :venue, class: "form-control", placeholder: "Enter venue", required: true%>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= form.label :start_date %>
+                      <%= form.text_field :start_date, type: "date", class: "form-control", placeholder: " Enter Start Date", required: true, min: Date.today %>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= form.label :end_date, "End Date"%>
+                      <%= form.text_field :end_date, type: "date", class: "form-control", placeholder: "Enter End Date",required: true, min: Date.today   %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-actions">
+                <div class="text-right">
+                  <%= form.submit (@event.id.present? ? "UPDATE EVENT": "CREATE EVENT"), class: "btn btn-info" %>
+                  <%= form.submit "RESET",type: :reset , class: "btn btn-dark" %>
+                  <%= link_to "BACK", events_path(@event), class: "btn btn-info" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
   </div>
-
-  <div class="field">
-    <%= form.label :venue %>
-    <%= form.text_field :venue %>
-  </div>
-
-  <div class="field">
-    <%= form.label :start_date %>
-    <%= form.date_select :start_date %>
-  </div>
-
-  <div class="field">
-    <%= form.label :end_date %>
-    <%= form.date_select :end_date %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

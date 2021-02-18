@@ -1,24 +1,24 @@
 class EventsController < ApplicationController
   before_action :set_event, only: %i[ show edit update destroy ]
-  # GET /events or /events.json
+  before_action :check_user_role, only: [:new, :edit]
   def index
     @events = current_user.events.all
   end
 
-  # GET /events/1 or /events/1.json
   def show
-    @event_expenses = current_user.expenses.all
+    @total_expense = Expense.where(event_id: @event.id).sum(:amount)
+    @total_budget = BudgetList.where(event_id: @event.id).sum(:amount)
+    @remaining_amount = @total_budget - @total_expense
+    @event_expenses = @event.expenses.order(updated_at: :desc)
+    @event_budgets_list = @event.budget_lists.order(updated_at: :desc)
   end
 
-  # GET /events/new
   def new
     @event = current_user.events.new
   end
 
-  # GET /events/1/edit
   def edit;end
 
-  # POST /events or /events.json
   def create
     @event = current_user.events.new(event_params)
     current_user.events << @event
@@ -33,7 +33,6 @@ class EventsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /events/1 or /events/1.json
   def update
     respond_to do |format|
       if @event.update(event_params)
@@ -46,7 +45,6 @@ class EventsController < ApplicationController
     end
   end
 
-  # DELETE /events/1 or /events/1.json
   def destroy
     @event.destroy
     respond_to do |format|
@@ -55,13 +53,17 @@ class EventsController < ApplicationController
     end
   end
 
+  protected
+    def check_user_role
+      if !current_user.admin?
+        redirect_to event_path(@event)
+      end
+    end
+
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_event
       @event = current_user.events.find(params[:id]) or not_found
     end
-
-    # Only allow a list of trusted parameters through.
     def event_params
       params.require(:event).permit(:title, :venue, :start_date, :end_date)
     end

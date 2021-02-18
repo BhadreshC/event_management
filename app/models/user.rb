@@ -1,9 +1,8 @@
 class User < ApplicationRecord
+  enum role: [:admin, :member]
   has_and_belongs_to_many :events
   has_many :expenses
-  # accepts_nested_attributes_for :expenses, reject_if: :all_blank, allow_destroy: true
-  # has_many :users
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  has_many :budget_lists
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :confirmable, :trackable
+  validates_format_of :number, with:  /\d[0-9]\)*\z/ , message: "Only positive number without spaces are allowed"
 end

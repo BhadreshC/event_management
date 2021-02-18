@@ -1,0 +1,77 @@
+<div class="page-wrapper">
+  <div class="page-breadcrumb"> 
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">ADD MEMBER</h4>
+            <%= form_with(url: event_users_path, local: true, model: User) do |f| %>
+              <% if @user.errors.any? %>
+                <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+                <ul>
+                  <% @user.errors.each do |error| %>
+                    <li><%= error.full_message %></li>
+                  <% end %>
+                </ul>
+              <% end %>
+              <div class="form-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <%= f.label :email %>
+                      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "Enter Email",required: true %>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <%= f.label :name %>
+                      <%= f.text_field :name, class: "form-control", placeholder: "Enter Name", required: true, value: "" %>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= f.label :password %>
+                      <% if @minimum_password_length %>
+                        <em>(<%= @minimum_password_length %> characters minimum)</em>
+                      <% end %><br />
+                      <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "Enter Password",required: true  %>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= f.label :password_confirmation %>
+                      <%= f.password_field :password_confirmation, autocomplete: "new-password",class: "form-control", placeholder: " Re-enter password", required: true %>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= f.label :number %><br />
+                      <%= f.telephone_field :number, data: { numeric: true }, class: "form-control", placeholder: " Enter  Mobile Number", required: true %>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= f.label :role %><br />
+                      <%= f.select :role, User.roles.keys, {}, {class: 'form-control'} %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-actions">
+                <div class="text-right">
+                  <%= f.submit "ADD MEMBER", class: "btn btn-info" %>
+                  <%= f.submit "RESET",type: :reset , class: "btn btn-dark" %>
+                  <%= link_to "BACK", event_path(@event),class: "btn btn-info"%>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

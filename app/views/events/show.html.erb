@@ -1,86 +1,207 @@
-<h5>Add Users</h5>
-<%#= link_to "Add Users", school_new_principle_path(@school) %>
-<%#= link_to("text", "url" , :options) %>
-<p id="notice"><%= notice %></p>
-<p>
-  <strong>Title:</strong>
-  <%= @event.title %>
-</p>
-
-<p>
-  <strong>Venue:</strong>
-  <%= @event.venue %>
-</p>
-
-<p>
-  <strong>Start date:</strong>
-  <%= @event.start_date %>
-</p>
-
-<p>
-  <strong>End date:</strong>
-  <%= @event.end_date %>
-</p>
-
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
-<table>
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>description</th>
-      <th>amount</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @event_expenses.each do |expense| %>
-      <tr>
-        <td><%= expense.date  %></td>
-        <td><%= expense.description %></td>
-        <td><%= expense.amount %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br><br><br><br><br><br><br>
-<%# byebug %>
-<%#= form_for @event do |f| %>
-  <!-- <h3>ADD Expenses</h3>
-  <div id='expenses'> -->
-    <%#= f.fields_for :expenses do |expense| %>
-      <%#= render 'expense_fields', f: expense  %>
-    <%# end %>
-    <!-- <div class='links'> -->
-      <%# link_to_add_association 'add expenses', f, :expenses %>
-    <!-- </div> -->
-  <!-- </div> -->
-
-  <!-- <div class="actions">
-    <%#= f.submit %>
-  </div> -->
-<%# end %>
-
-
-
-<%#= form_for  Expense.new do |form| %>
-  <!-- <div class="field">
-    <%#= form.label :description %>
-    <%#= form.text_field :description %>
+<div class="page-wrapper">
+  <div class="page-breadcrumb">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <% if current_user.admin? %>
+            <div class="text-right">
+              <%= link_to "ADD MEMBER", event_add_member_path(@event), class: "btn btn-info" %>
+            </div>
+          <% end %>
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4 col-lg-4 col-xlg-4">
+                  <div class="card card-hover">
+                    <div class="p-2 bg-primary text-center">
+                      <h1 class="font-light text-white"><%= @total_budget %></h1>
+                      <h6 class="text-white">TOTAL BUDGET</h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-xlg-4">
+                  <div class="card card-hover">
+                    <div class="p-2 bg-cyan text-center">
+                      <h1 class="font-light text-white"><%= @total_expense %></h1>
+                      <h6 class="text-white">TOTAL EXPENSE</h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-xlg-4">
+                  <div class="card card-hover">
+                    <div class="p-2 bg-success text-center">
+                      <h1 class="font-light text-white"><%= @remaining_amount %></h1>
+                      <h6 class="text-white">REMAIN AMOUNT</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row my-4 text-center">
+                <div class="col-md-3">
+                  <strong>Title:</strong>
+                  <b><%= @event.title %></b>
+                </div>
+                <div class="col-md-3">
+                  <strong>Venue:</strong>
+                  <%= @event.venue %>
+                </div>
+                <div class="col-md-3">
+                  <strong>Start date:</strong>
+                  <%= @event.start_date %>
+                </div>
+                <div class="col-md-3">
+                  <strong>End date:</strong>
+                  <%= @event.end_date %>
+                </div>
+              </div>
+              <div class="text-right flex-auto">
+                <% if current_user.admin? %>
+                  <%= link_to 'Edit', edit_event_path(@event), class: "btn waves-effect waves-light btn-rounded btn-outline-info"  %>
+                <% end %>
+                <%= link_to 'Back', events_path, class: "btn waves-effect waves-light btn-rounded btn-outline-dark" %>
+              </div>
+              <h5 class="text-center">BUDGET LIST</h5>
+              <div class="table-responsive">
+                <table id="zero_config" class="table table-striped table-bordered no-wrap">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>TITLE</th>
+                      <th>AMOUNT</th>
+                      <% if current_user.admin? %>
+                        <th colspan="2" class="text-center">ACTION</th>
+                      <% end %>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% @event_budgets_list.includes(:activities).each_with_index do |budget, index| %>
+                      <tr class="accordion-toggle collapsed" data-toggle="collapse" href="#budget<%= index +1 %>">
+                        <% if !budget.activities.blank?  %>
+                          <td class="expand-button"></td>
+                            <% else %>
+                          <td></td>
+                        <% end %>
+                        <td><%= budget.title  %></td>
+                        <td><%= budget.amount %></td>
+                        <% if current_user.admin? || current_user.id == budget.user_id  %>
+                          <td><%= link_to 'Edit', edit_event_budget_list_path(@event, budget), class: "btn waves-effect waves-light btn-rounded btn-outline-info" %>
+                          </td>
+                          <td><%= link_to 'Destroy', event_budget_list_path(@event, budget), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn waves-effect waves-light btn-rounded btn-outline-danger" %>
+                          </td>
+                        <% end %>
+                      </tr>
+                      <%unless budget.activities.blank? %>
+                        <tr class="hide-table-padding">
+                          <td></td>
+                          <td colspan="3">
+                            <div id="budget<%= index +1 %>" class="collapse in p-3">
+                              <div class="row">
+                                <div class="col-12">
+                                  <% budget.activities.each do |activity| %>
+                                    <p><%= activity.name %></p>
+                                  <% end %>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      <% end %>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+              <hr>
+              <% if current_user.admin? %>
+                <div class="text-right">
+                  <%= link_to 'ADD BUDGET', new_event_budget_list_path(@event), class: "btn btn-info" %>
+                </div>
+              <% end %>
+              <h5 class="text-center">EXPENSE DETAIL</h5>
+              <div class="table-responsive">
+                <table id="zero_config" class="table table-striped table-bordered no-wrap">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>DATE</th>
+                      <th>DESCRIPTION</th>
+                      <th>USER</th>
+                      <th>AMOUNT</th>
+                      <th colspan="2" class="text-center">ACTION</th>
+                    <% @event_expenses.includes(:user, :activities).each_with_index do |expense, index| %>
+                      <tr class="accordion-toggle collapsed" data-toggle="collapse" href="#expense<%= index +1 %>">
+                        <% if !expense.activities.blank? %>
+                          <td class="expand-button"></td>
+                        <% else %>
+                          <td></td>
+                        <% end %>
+                        <td><%= expense.date  %></td>
+                        <td><%= expense.description %></td>
+                        <td><%= expense.user.name %></td>
+                        <td><%= expense.amount %></td>
+                        <% if current_user.admin? || current_user.id == expense.user_id %>
+                          <td><%= link_to 'Edit', edit_event_expense_path(@event, expense), class: "btn waves-effect waves-light btn-rounded btn-outline-info" %></td>
+                          <td><%= link_to 'Destroy', event_expense_path(@event, expense), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn waves-effect waves-light btn-rounded btn-outline-danger" %></td>
+                          <% else %>
+                          <td></td><td></td>
+                        <% end %>
+                      </tr>
+                      <%unless expense.activities.blank? %>
+                        <tr class="hide-table-padding">
+                          <td></td>
+                          <td colspan="3">
+                            <div id="expense<%= index +1 %>" class="collapse in p-3">
+                              <div class="row">
+                                <div class="col-12">
+                                  <% expense.activities.each do |activity| %>
+                                    <p><%= activity.name %></p>
+                                  <% end %>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      <% end  %>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+              <div class="text-right">
+                <%= link_to"ADD EXPENSE", new_event_expense_path(@event), class: "btn btn-info" %>
+              </div>
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title text-center">USERS</h4>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Contact Number</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @event.users.each_with_index do |user, index| %>
+                        <tr>
+                          <td><%= index + 1 %></td>
+                          <td><%= user.name  %></td>
+                          <td><%= user.email %></td>
+                          <td><%= user.role %></td>
+                          <td><%= user.number %></td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
-  <div class="field">
-    <%#= form.label :date %>
-    <%#= form.date_select :date %>
-  </div>
-
-  <div class="field">
-    <%#= form.label :amount %>
-    <%#= form.number_field :amount %>
-  </div>
-
-  <div class="actions">
-  <%#= form.submit %>
-  </div> -->
-<%# end %>

@@ -4,12 +4,12 @@
       <div class="col-12">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">ADD EXPENSE</h4>
-            <%= form_with model: [@event, expense] do |form| %>
-              <% if expense.errors.any? %>
-                <h2><%= pluralize(expense.errors.count, "error") %> prohibited this expense from being saved:</h2>
+            <h4 class="card-title">Add Budget</h4>
+            <%= form_with model: [@event, budget_list] do |form| %>
+              <% if budget_list.errors.any? %>
+                <h2><%= pluralize(budget_list.errors.count, "error") %> prohibited this budget_list from being saved:</h2>
                 <ul>
-                  <% expense.errors.each do |error| %>
+                  <% budget_list.errors.each do |error| %>
                     <li><%= error.full_message %></li>
                   <% end %>
                 </ul>
@@ -19,8 +19,8 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <%= form.hidden_field :event_id, value: @event.id %>
-                      <%= form.label :description %>
-                      <%= form.text_field :description, class: "form-control", placeholder: "Enter Description",required: true  %>
+                      <%= form.label :title %>
+                      <%= form.text_field :title, class: "form-control", placeholder: "Enter Title",required: true %>
                     </div>
                   </div>
                 </div>
@@ -28,22 +28,14 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <%= form.label :amount %>
-                      <%= form.number_field :amount, class: "form-control", placeholder: "Enter Amount",required: true, min: 0 %>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <%= form.label :date %>
-                      <%= form.text_field :date, type: :date, class: "form-control", placeholder: "Select Date", required: true, min: Date.today %>
+                      <%= form.number_field :amount, class: "form-control", placeholder: "Enter Amount",required: true, min: 0, step: "any"%>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="form-actions">
                 <div class="text-right">
-                  <%= form.submit (@expense.id.present? ? "UPDATE EXPENSE": "CREATE EXPENSE"), class: "btn btn-info" %>
+                  <%= form.submit (@budget_list.id.present? ? "UPDATE BUDGET": "CREATE BUDGET"), class: "btn btn-info" %>
                   <%= form.submit "RESET",type: :reset , class: "btn btn-dark" %>
                   <%= link_to "BACK",event_path(@event), class: "btn btn-info" %>
                 </div>

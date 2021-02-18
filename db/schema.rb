@@ -10,10 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_15_093302) do
+ActiveRecord::Schema.define(version: 2021_02_18_064935) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activities", force: :cascade do |t|
+    t.string "name"
+    t.bigint "activeable_id"
+    t.string "activeable_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "budget_lists", force: :cascade do |t|
+    t.string "title"
+    t.decimal "amount", precision: 10, scale: 2
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "event_id"
+    t.index ["event_id"], name: "index_budget_lists_on_event_id"
+    t.index ["user_id"], name: "index_budget_lists_on_user_id"
+  end
 
   create_table "events", force: :cascade do |t|
     t.string "title"
@@ -34,15 +53,17 @@ ActiveRecord::Schema.define(version: 2021_02_15_093302) do
   create_table "expenses", force: :cascade do |t|
     t.string "description"
     t.date "date"
-    t.integer "amount"
+    t.decimal "amount", precision: 10, scale: 2
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "event_id"
+    t.index ["event_id"], name: "index_expenses_on_event_id"
     t.index ["user_id"], name: "index_expenses_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
-    t.integer "number"
+    t.string "number"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -59,6 +80,8 @@ ActiveRecord::Schema.define(version: 2021_02_15_093302) do
     t.string "unconfirmed_email"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "role", default: 0
+    t.string "name"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
