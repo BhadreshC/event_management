@@ -50,7 +50,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <%= f.label :number %><br />
-                      <%= f.telephone_field :number, data: { numeric: true }, class: "form-control", placeholder: " Enter  Mobile Number", required: true %>
+                      <%= f.telephone_field :number, data: { numeric: true }, class: "form-control", placeholder: 'xxx-xxx-xxxx', required: true, pattern: '\d{10}' %>
                     </div>
                   </div>
                   <div class="col-md-6">

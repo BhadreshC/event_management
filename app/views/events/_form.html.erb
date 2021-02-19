@@ -45,6 +45,70 @@
                     </div>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= form.label :event_type %>
+                      <%= form.select :event_type, Event.event_types.keys, { include_blank: "Select Event Type" }, {class: "form-control", placeholder: " Enter Event Type", required: true } %>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= form.label :event_fees%>
+                      <%= form.number_field :event_fees, class: "form-control", placeholder: "Enter Fees",required: true, min: 0 %>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= form.label :person_capicity %>
+                      <%= form.number_field :person_capicity, class: "form-control", placeholder: " Enter Person capicity", required: true, min: 0 %>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= form.label :event_link%>
+                      <%= form.text_field :event_link, class: "form-control", placeholder: "Enter Event link",required: true %>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= form.label :time_to_start %>
+                      <%= form.text_field :time_to_start, type: :time, class: "form-control", placeholder: " Enter Event Start Time", required: true %>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= form.label :paid, "Paid?" %>
+                      <%= form.check_box :paid %>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= form.label :event_category %>
+                      <%= form.collection_select :event_category_id, @event_categories, :id, :public_name, {include_blank: "Select Event Category" }, {class: "form-control", placeholder: " Enter Event Start Time", required: true}%>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Upload</span>
+                        </div>
+                        <div class="custom-file">
+                          <%= form.file_field :image,class: "custom-file-input" %>
+                          <%= form.label :image, "Choose Image", class: "custom-file-label" %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
               </div>
               <div class="form-actions">
                 <div class="text-right">

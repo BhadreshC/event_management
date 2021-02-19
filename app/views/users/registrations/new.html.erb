@@ -16,7 +16,7 @@
                   </div>
                   <div class="col-lg-12">
                     <div class="form-group">
-                      <%= f.text_field :number, required: true, class: "form-control", placeholder: "Number" %>
+                      <%= f.text_field :number, required: true, class: "form-control", placeholder: "xxx-xxx-xxxx", data: { numeric: true }, pattern: '\d{10}' %>
                     </div>
                   </div>
                   <div class="col-lg-12">

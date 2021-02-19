@@ -1,6 +1,10 @@
 class EventsController < ApplicationController
   before_action :set_event, only: %i[ show edit update destroy ]
-  before_action :check_user_role, only: [:new, :edit]
+  before_action :check_user_role, :set_event_categories,only: [:new, :edit]
+  skip_before_action :authenticate_user!, only: :events_list
+  def events_list
+    @all_events = Event.includes(:event_category).all
+  end
   def index
     @events = current_user.events.all
   end
@@ -15,6 +19,7 @@ class EventsController < ApplicationController
 
   def new
     @event = current_user.events.new
+
   end
 
   def edit;end
@@ -61,10 +66,13 @@ class EventsController < ApplicationController
     end
 
   private
+    def set_event_categories
+      @event_categories = EventCategory.where(status: "active").all
+    end
     def set_event
       @event = current_user.events.find(params[:id]) or not_found
     end
     def event_params
-      params.require(:event).permit(:title, :venue, :start_date, :end_date)
+      params.require(:event).permit(:title, :venue, :start_date, :end_date, :event_category_id, :event_type, :event_fees, :person_capicity, :event_link, :time_to_start, :paid, :image)
     end
 end

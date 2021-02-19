@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-12">
+    <div class="row">
+     <% @all_events.each_with_index do |event, index| %>
+        <div class="col-lg-3 col-md-6">
+          <div class="card">
+           <img class="card-img-top img-fluid" src="../assets/images/big/img3.jpg"
+                alt="Card image cap">
+            <div class="card-body">
+              <h4 class="card-title"><%= event.title %></h4>
+              <div>
+                <h5><%= event.start_date.strftime("%d-%b") %> -<%= event.end_date.strftime("%d-%b") %> | <%= event.venue %> | <%= event.time_to_start.strftime("%I:%H:%M %P") %> </h5>
+              </div>
+              <div>
+                <h5><%= event.event_type %> | Limit:(<%= event.person_capicity %>)</h5>
+              </div>
+              <div>
+                <% if event.paid? %>
+                  <p>&#8377;<%= event.event_fees %> onwards<p>
+                <% else %>
+                  <p>FREE</p>
+                <% end %>
+              </div>
+              <%= link_to "Visit Website", event.event_link, class: "btn btn-danger"%> 
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -12,8 +12,10 @@
   <body>
     <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
       data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
-      <%= render 'layouts/header' %>
-      <%= render 'layouts/sidebar' %>
+      <% if action_name != "events_list" %>
+        <%= render 'layouts/header' %>
+        <%= render 'layouts/sidebar' %>
+      <% end %>
       <%= yield %>
     </div>
   </body>
