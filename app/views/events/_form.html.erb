@@ -35,13 +35,13 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <%= form.label :start_date %>
-                      <%= form.text_field :start_date, type: "date", class: "form-control", placeholder: " Enter Start Date", required: true, min: Date.today %>
+                      <%= form.text_field :start_date, type: "date", class: "form-control", placeholder: " Enter Start Date", required: true, id:"start_date  "%>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <%= form.label :end_date, "End Date"%>
-                      <%= form.text_field :end_date, type: "date", class: "form-control", placeholder: "Enter End Date",required: true, min: Date.today   %>
+                      <%= form.text_field :end_date, type: "date", class: "form-control", placeholder: "Enter End Date",required: true, id:"end_date" %>
                     </div>
                   </div>
                 </div>
@@ -69,7 +69,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <%= form.label :event_link%>
-                      <%= form.text_field :event_link, class: "form-control", placeholder: "Enter Event link",required: true %>
+                      <%= form.text_field :event_link, class: "form-control", placeholder: "Enter Event link" %>
                     </div>
                   </div>
                 </div>
@@ -77,37 +77,47 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <%= form.label :time_to_start %>
-                      <%= form.text_field :time_to_start, type: :time, class: "form-control", placeholder: " Enter Event Start Time", required: true %>
+                      <%= form.time_field :time_to_start, {type: "time", class: "form-control", placeholder: "Enter Event Start Time", required: true}%>
                     </div>
                   </div>
                   <div class="col-md-6">
+                    <div class="form-group">
+                      <%= form.label :event_category %>
+                      <%= form.collection_select :event_category_id, @event_categories, :id, :public_name, {include_blank: "Select Event Category" }, {class: "form-control", placeholder: " Enter Event Start Time", required: true} %>
+                    </div>
+                  </div>
+                </div>
+                <div class="row align-items-center">
+                  <div class="col-md-3">
                     <div class="form-group">
                       <%= form.label :paid, "Paid?" %>
                       <%= form.check_box :paid %>
                     </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <%= form.label :event_category %>
-                      <%= form.collection_select :event_category_id, @event_categories, :id, :public_name, {include_blank: "Select Event Category" }, {class: "form-control", placeholder: " Enter Event Start Time", required: true}%>
+                  <div class="col-md-3">
+                    <div class="form-group event_image">
+                      <% if !event.new_record? %>
+                        <p class="mb-0">Uploaded Image</p>
+                        <div class="Uploaded Image" style="height: 100px; width: auto; overflow: hidden;" >
+                          <%= image_tag event.image, class: "h-100"%>
+                        </div>
+                      <% end %>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
+                      <%= form.label :image, "Choose Event Image"%>
                       <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">Upload</span>
+                          <span class="input-group-text">Upload</span>
                         </div>
                         <div class="custom-file">
-                          <%= form.file_field :image,class: "custom-file-input" %>
+                          <%= form.file_field :image,class: "custom-file-input", accept: 'image/png,image/gif,image/jpeg,image/jpg'%>
                           <%= form.label :image, "Choose Image", class: "custom-file-label" %>
                         </div>
                       </div>
                     </div>
                   </div>
-
                 </div>
               </div>
               <div class="form-actions">

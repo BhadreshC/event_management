@@ -1,10 +1,12 @@
 class EventsController < ApplicationController
   before_action :set_event, only: %i[ show edit update destroy ]
-  before_action :check_user_role, :set_event_categories,only: [:new, :edit]
+  before_action :check_user_role, :set_event_categories,only: [:new, :edit, :update]
   skip_before_action :authenticate_user!, only: :events_list
+
   def events_list
-    @all_events = Event.includes(:event_category).all
+    @all_events = Event.includes(:event_category, image_attachment: :blob).where.not('end_date <= ?', Date.today).order('start_date ASC')
   end
+
   def index
     @events = current_user.events.all
   end

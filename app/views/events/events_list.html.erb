@@ -1,31 +1,58 @@
-<div class="row">
-  <div class="col-12">
-    <div class="row">
-     <% @all_events.each_with_index do |event, index| %>
-        <div class="col-lg-3 col-md-6">
-          <div class="card">
-           <img class="card-img-top img-fluid" src="../assets/images/big/img3.jpg"
-                alt="Card image cap">
-            <div class="card-body">
-              <h4 class="card-title"><%= event.title %></h4>
-              <div>
-                <h5><%= event.start_date.strftime("%d-%b") %> -<%= event.end_date.strftime("%d-%b") %> | <%= event.venue %> | <%= event.time_to_start.strftime("%I:%H:%M %P") %> </h5>
+<div class="container-fluid m-10">
+  <div class="row">
+    <div class="col-12">
+      <h2 class="text-center text-primary my-3">All Events(<%= @all_events.count %>)</h2>
+      <div class="row">
+        <% @all_events.each_with_index do |event, index| %>
+          <div class="col-lg-3 col-md-6">
+            <div class="card" id="event_list">
+              <div class="event_image" style="height: 294px; width:auto;overflow:hidden;" >
+                <%= image_tag event.image, class: "card-img-top img-fluid h-100", alt: "Card image cap"%>
               </div>
-              <div>
-                <h5><%= event.event_type %> | Limit:(<%= event.person_capicity %>)</h5>
+              <div class="event-card-body ">
+                <div class="event-card-details-top">
+                  <h4 class="card-title"><%= event.title %></h4>
+                  <h5 class="font-weight-bold"><%= event.start_date.strftime("%d %b") %> - <%= event.end_date.strftime("%d %b") %> | <%= event.time_to_start.strftime("%H:%M") %></h5>
+                  <div class="d-flex">
+                    <div class="location_svg">
+                      <svg height="20px" width="20px" viewBox="0 0 368.16 368.16" fill="#7c8798">
+                        <path d="M184.08,0c-74.992,0-136,61.008-136,136c0,24.688,11.072,51.24,11.536,52.36c3.576,8.488,10.632,21.672,15.72,29.4
+                          l93.248,141.288c3.816,5.792,9.464,9.112,15.496,9.112s11.68-3.32,15.496-9.104l93.256-141.296
+                          c5.096-7.728,12.144-20.912,15.72-29.4c0.464-1.112,11.528-27.664,11.528-52.36C320.08,61.008,259.072,0,184.08,0z
+                          M293.8,182.152c-3.192,7.608-9.76,19.872-14.328,26.8l-93.256,141.296c-1.84,2.792-2.424,2.792-4.264,0L88.696,208.952
+                          c-4.568-6.928-11.136-19.2-14.328-26.808C74.232,181.816,64.08,157.376,64.08,136c0-66.168,53.832-120,120-120
+                          c66.168,0,120,53.832,120,120C304.08,157.408,293.904,181.912,293.8,182.152z"/>
+                        <path d="M184.08,64.008c-39.704,0-72,32.304-72,72c0,39.696,32.296,72,72,72c39.704,0,72-32.304,72-72
+                        C256.08,96.312,223.784,64.008,184.08,64.008z M184.08,192.008c-30.872,0-56-25.12-56-56s25.128-56,56-56s56,25.12,56,56
+                        S214.952,192.008,184.08,192.008z"/>
+                      </svg>
+                    </div>
+                    <p class="venue"> <%= event.venue %></p>
+                  </div>
+                  <% if !event.person_capicity.blank? %>
+                    <h5><span class="font-weight-bold">Person Limit:</span> <%= event.person_capicity %></h5>
+                  <% end %>
+                  <h5 class="text-primary font-weight-bold"><%= event.event_type %></h5>
+                </div>
+                <div class="event-card-container">
+                  <div>
+                    <% if !event.event_link.blank? %>
+                      <%= link_to "Visit Website", event.event_link, class: "btn btn-danger"%>
+                    <% end %>
+                  </div>
+                  <div>
+                    <% if event.paid? %>
+                      <h4 class="text-primary mb-0">Fee: &#8377;<%= event.event_fees %></h4>
+                    <% else %>
+                      <h4 class="text-primary mb-0">FREE</h4>
+                    <% end %>
+                  </div>
+                </div>
               </div>
-              <div>
-                <% if event.paid? %>
-                  <p>&#8377;<%= event.event_fees %> onwards<p>
-                <% else %>
-                  <p>FREE</p>
-                <% end %>
-              </div>
-              <%= link_to "Visit Website", event.event_link, class: "btn btn-danger"%> 
             </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

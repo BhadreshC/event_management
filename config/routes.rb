@@ -10,5 +10,5 @@ Rails.application.routes.draw do
     get 'add_member', to:'users#add_member'
     post 'users', to:'users#create_member'
   end
-  match '*path', to: 'errors#error_404', via: :all
+  # match '/*path', to: 'errors#error_404', via: :all
 end
