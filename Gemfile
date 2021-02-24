@@ -28,7 +28,6 @@ gem 'jquery-rails', '4.2.2'
 gem 'jquery-ui-rails', '6.0.1'
 
 gem "cocoon"
-# Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
