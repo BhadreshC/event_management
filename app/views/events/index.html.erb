@@ -3,6 +3,14 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
+          <% flash.each do |key, value| %>
+            <div class="alert alert-success alert-dismissible bg-success text-white border-0 fade show" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <%= value %>
+           </div>
+          <% end %>
           <div class="text-right mb-2">
             <%= link_to 'New Event', new_event_path, class: "btn btn-info"  %>
           </div>
@@ -24,13 +32,7 @@
                   <tbody>
                     <% @events.each do |event| %>
                       <tr>
-                        <% if (event.start_date..event.end_date).include?(Date.today) %>
-                          <td>On going</td>
-                        <% elsif event.end_date <= Date.today %>
-                          <td>Closed</td>
-                        <% else %>
-                          <td>Up coming</td>
-                        <% end %>
+                        <td><%= event_status(event) %></td>
                         <td><%= event.title %></td>
                         <td><%= event.venue %></td>
                         <td><%= event.start_date %></td>
