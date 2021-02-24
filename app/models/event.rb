@@ -12,6 +12,7 @@ class Event < ApplicationRecord
   def current?(event)
     (event.start_date .. event.end_date).include?(Date.today)
   end
+
   private
   def end_date_is_after_start_date
     return if end_date.blank? || start_date.blank?
