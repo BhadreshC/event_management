@@ -32,6 +32,14 @@
                   </div>
                 </div>
                 <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <%= form.label :about %>
+                      <%= form.rich_text_area :about, class: "form-control", placeholder: "Enter Event description", required: true%>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
                       <%= form.label :start_date %>
@@ -55,7 +63,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <%= form.label :event_fees%>
-                      <%= form.number_field :event_fees, class: "form-control", placeholder: "Enter Fees",required: true, min: 0 %>
+                      <%= form.number_field :event_fees, class: "form-control", placeholder: "Enter Fees", min: 0 %>
                     </div>
                   </div>
                 </div>
@@ -63,12 +71,12 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <%= form.label :person_capicity %>
-                      <%= form.number_field :person_capicity, class: "form-control", placeholder: " Enter Person capicity", required: true, min: 0 %>
+                      <%= form.number_field :person_capicity, class: "form-control", placeholder: " Enter Person capicity", min: 0 %>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <%= form.label :event_link%>
+                      <%= form.label :event_link %>
                       <%= form.url_field :event_link, class: "form-control", placeholder: "Enter Event link" %>
                     </div>
                   </div>
@@ -112,7 +120,7 @@
                           <span class="input-group-text">Upload</span>
                         </div>
                         <div class="custom-file">
-                          <%= form.file_field :image,class: "custom-file-input", accept: 'image/png,image/gif,image/jpeg,image/jpg'%>
+                          <%= form.file_field :image, class: "custom-file-input", accept: 'image/png,image/gif,image/jpeg,image/jpg', required: true%>
                           <%= form.label :image, "Choose Image", class: "custom-file-label" %>
                         </div>
                       </div>

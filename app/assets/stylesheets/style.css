@@ -3417,7 +3417,8 @@ input[type="button"].btn-block {
   padding: 25px; }
 
 .card-title {
-  margin-bottom: 0.75rem; }
+  margin-bottom: 0.75rem;color: #7c8798;
+}
 
 .card-subtitle {
   margin-top: -0.375rem;

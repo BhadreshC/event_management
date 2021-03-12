@@ -13,3 +13,5 @@
 //= require chartist.min
 //= require chartist_plugin_tooltip.min
 //= require dashboard.min
+//= require trix
+//= require("rails/actiontext")

@@ -145,7 +145,7 @@
                         <% end %>
                         <td><%= expense.date  %></td>
                         <td><%= expense.description %></td>
-                        <td><%= expense.user.name %></td>
+                        <td><%= expense.user.name%> (<%= expense.user.role %>)</td>
                         <td><%= expense.amount %></td>
                         <% if current_user.admin? || current_user.id == expense.user_id %>
                           <td><%= link_to 'Edit', edit_event_expense_path(@event, expense), class: "btn waves-effect waves-light btn-rounded btn-outline-info" %></td>
@@ -179,7 +179,7 @@
               </div>
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title text-center">USERS</h4>
+                  <h4 class="card-title text-center" style="color: #7c8798;">USERS</h4>
                 </div>
                 <div class="table-responsive">
                   <table class="table table-striped">

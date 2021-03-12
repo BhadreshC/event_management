@@ -11,7 +11,9 @@
               </div>
               <div class="event-card-body ">
                 <div class="event-card-details-top">
-                  <h4 class="card-title"><%= event.title %></h4>
+                  <%= link_to events_detail_path(event) do %>
+                    <h4 class="card-title text-primary"><%= event.title %></h4>
+                  <% end %>
                   <h5 class="font-weight-bold"><%= event.start_date.strftime("%d %b") %> - <%= event.end_date.strftime("%d %b") %> | <%= event.time_to_start.strftime("%H:%M") %></h5>
                   <div class="d-flex">
                     <div class="location_svg">
@@ -37,7 +39,7 @@
                 <div class="event-card-container">
                   <div>
                     <% if !event.event_link.blank? %>
-                      <%= link_to "Visit Website", event.event_link, class: "btn btn-danger"%>
+                      <%= link_to "Visit Website", event.event_link, class: "btn btn-danger", target: "blank"%>
                     <% end %>
                   </div>
                   <div>

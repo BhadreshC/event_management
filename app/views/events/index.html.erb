@@ -11,9 +11,11 @@
               <%= value %>
            </div>
           <% end %>
-          <div class="text-right mb-2">
-            <%= link_to 'New Event', new_event_path, class: "btn btn-info"  %>
-          </div>
+          <% if current_user.admin? %>
+            <div class="text-right mb-2">
+              <%= link_to 'New Event', new_event_path, class: "btn btn-info"  %>
+            </div>
+          <% end %>
           <div class="card">
             <div class="card-body">
               <h4 class="text-center">YOUR EVENTS</h4>

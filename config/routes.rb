@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   }
   root to: redirect("/login")
     get 'events_list', to:'events#events_list'
+    get 'events_list/:id', to:'events#events_detail', as: :events_detail
     resources :events do
     resources :budget_lists, except: [:index, :show]
     resources :expenses, except: [:index, :show]

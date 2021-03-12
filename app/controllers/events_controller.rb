@@ -6,8 +6,16 @@ class EventsController < ApplicationController
     @all_events = Event.includes(:event_category, image_attachment: :blob).where.not('end_date <= ?', Date.today).order('start_date ASC')
   end
 
+  def events_detail
+    @event = Event.find(params[:id])
+  end
+
   def index
     @events = current_user.events.all
+    puts "-----------------"
+    puts @events.as_json
+    puts "-----------------"
+    puts "-----------------"
   end
 
   def show
@@ -74,6 +82,6 @@ class EventsController < ApplicationController
       @event = current_user.events.find(params[:id]) or not_found
     end
     def event_params
-      params.require(:event).permit(:title, :venue, :start_date, :end_date, :event_category_id, :event_type, :event_fees, :person_capicity, :event_link, :time_to_start, :paid, :image)
+      params.require(:event).permit(:title, :venue, :start_date, :end_date, :about, :event_category_id, :event_type, :event_fees, :person_capicity, :event_link, :time_to_start, :paid, :image)
     end
 end
