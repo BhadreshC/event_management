@@ -9099,7 +9099,7 @@ tr.hide-table-padding td {
   position: relative;
 }
 
-.accordion-toggle .expand-button:after{
+.accordion-toggle .expand-button:after {
   position: absolute;
   left:.75rem;
   top: 50%;
@@ -9127,11 +9127,13 @@ tr.hide-table-padding td {
   flex-flow: column;
   justify-content: space-between;
 }
-.venue{word-break: break-all;}
-.event_image img{ transition: transform .5s ease; }
-
+.venue{
+  word-break: break-all;
+}
+.event_image img{
+ transition: transform .5s ease;
+}
 img.card-img-top.img-fluid.h-100:hover {
   transform: scale(1.09);
   cursor: pointer;
 }
-</style>
