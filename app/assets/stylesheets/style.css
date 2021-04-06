@@ -9129,5 +9129,9 @@ tr.hide-table-padding td {
 }
 .venue{word-break: break-all;}
 .event_image img{ transition: transform .5s ease; }
-img.card-img-top.img-fluid.h-100:hover {transform: scale(1.09);cursor: pointer;}
+
+img.card-img-top.img-fluid.h-100:hover {
+  transform: scale(1.09);
+  cursor: pointer;
+}
 </style>
